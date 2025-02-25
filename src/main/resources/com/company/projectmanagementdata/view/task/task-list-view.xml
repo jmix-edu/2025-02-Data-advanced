@@ -8,6 +8,7 @@
                     class="com.company.projectmanagementdata.entity.Task">
             <fetchPlan extends="_base">
                 <property name="assignee" fetchPlan="_instance_name"/>
+                <property name="project" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="tasksDl" readOnly="true">
                 <query>
@@ -33,7 +34,6 @@
             <properties include=".*"/>
         </genericFilter>
         <hbox id="buttonsPanel" classNames="buttons-panel">
-            <button id="createButton" action="tasksDataGrid.create"/>
             <button id="editButton" action="tasksDataGrid.edit"/>
             <button id="removeButton" action="tasksDataGrid.remove"/>
             <simplePagination id="pagination" dataLoader="tasksDl"/>
@@ -44,15 +44,16 @@
                   dataContainer="tasksDc"
                   columnReorderingAllowed="true">
             <actions>
-                <action id="create" type="list_create"/>
                 <action id="edit" type="list_edit"/>
                 <action id="remove" type="list_remove"/>
             </actions>
             <columns resizable="true">
                 <column property="name"/>
                 <column property="assignee"/>
+                <column property="project"/>
                 <column property="startDate"/>
                 <column property="estimatedEfforts"/>
+                <column property="label"/>
             </columns>
         </dataGrid>
         <hbox id="lookupActions" visible="false">
