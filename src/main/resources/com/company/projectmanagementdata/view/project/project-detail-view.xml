@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <view xmlns="http://jmix.io/schema/flowui/view"
       title="msg://projectDetailView.title"
-      focusComponent="form">
+      focusComponent="projectForm">
     <data>
         <instance id="projectDc"
                   class="com.company.projectmanagementdata.entity.Project">
@@ -100,6 +100,8 @@
         <hbox id="detailActions">
             <button id="saveAndCloseButton" action="saveAction"/>
             <button id="closeButton" action="closeAction"/>
+            <button id="commitWithBeanValidation" text="msg://commitWithBeanValidation.text"/>
+            <button id="performBeanValidationButton" text="msg://performBeanValidationButton.text"/>
         </hbox>
     </layout>
 </view>
