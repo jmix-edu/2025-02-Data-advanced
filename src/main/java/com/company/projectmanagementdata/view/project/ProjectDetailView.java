@@ -5,6 +5,7 @@ import com.company.projectmanagementdata.datatype.ProjectLabels;
 import com.company.projectmanagementdata.entity.Project;
 import com.company.projectmanagementdata.entity.Roadmap;
 import com.company.projectmanagementdata.view.main.MainView;
+import com.company.projectmanagementdata.view.user.UserListView;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.router.Route;
@@ -29,9 +30,9 @@ import java.util.Set;
 @ViewDescriptor(path = "project-detail-view.xml")
 @EditedEntityContainer("projectDc")
 public class ProjectDetailView extends StandardDetailView<Project> {
-
     @ViewComponent
     private DataContext dataContext;
+
     @Autowired
     private Metadata metadata;
     @ViewComponent
@@ -54,6 +55,11 @@ public class ProjectDetailView extends StandardDetailView<Project> {
         projectLabelsField.setReadOnly(false);
 
         event.getEntity().setProjectLabels(new ProjectLabels(List.of("bug", "task", "enhancement")));
+    }
+
+    @Install(to = "usersDataGrid.add", subject = "viewConfigurer")
+    private void usersDataGridAddViewConfigurer(final UserListView view) {
+        view.setFilterProject(getEditedEntity());
     }
 
     @Subscribe(id = "commitWithBeanValidation", subject = "clickListener")

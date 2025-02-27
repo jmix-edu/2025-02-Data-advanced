@@ -1,6 +1,6 @@
 package com.company.projectmanagementdata.entity;
 
-import com.company.projectmanagementdata.listeners.TaskJpaListener;
+import com.company.projectmanagementdata.listener.TaskJpaListener;
 import io.jmix.core.annotation.DeletedBy;
 import io.jmix.core.annotation.DeletedDate;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
@@ -42,30 +42,25 @@ public class Task {
     @Column(name = "START_DATE")
     private LocalDateTime startDate;
 
-    @JmixProperty
-    @Transient
-    private LocalDateTime supposedEndDate;
     @Column(name = "ESTIMATED_EFFORTS")
     private Integer estimatedEfforts;
-
     @JoinColumn(name = "PROJECT_ID", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Project project;
-
     @Column(name = "LABEL")
     private String label;
-
     @DeletedBy
     @Column(name = "DELETED_BY")
     private String deletedBy;
-
     @DeletedDate
     @Column(name = "DELETED_DATE")
     private OffsetDateTime deletedDate;
-
     @Column(name = "CLOSED", nullable = false)
     @NotNull
     private Boolean closed = false;
+    @JmixProperty
+    @Transient
+    private LocalDateTime supposedEndDate;
 
     public LocalDateTime getSupposedEndDate() {
         return supposedEndDate;

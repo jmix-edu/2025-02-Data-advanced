@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://dadListView.title"
+      focusComponent="dadsDataGrid">
+    <data>
+        <collection id="dadsDc"
+                    class="com.company.projectmanagementdata.entity.Dad">
+            <fetchPlan extends="_base">
+                <property name="son1" fetchPlan="_base"/>
+                <property name="son2" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="dadsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Dad e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="dadsDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="dadsDataGrid.create"/>
+            <button id="editButton" action="dadsDataGrid.edit"/>
+            <button id="removeButton" action="dadsDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="dadsDl"/>
+        </hbox>
+        <dataGrid id="dadsDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="dadsDc"
+                  columnReorderingAllowed="true">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="son1"/>
+                <column property="son2"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

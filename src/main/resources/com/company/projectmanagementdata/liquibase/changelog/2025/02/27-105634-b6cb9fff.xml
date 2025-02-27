@@ -6,14 +6,8 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
     <changeSet id="1" author="project-management-data">
-        <addColumn tableName="USER_">
-            <column name="CONTACT_INFORMATION_ADDRESS" type="VARCHAR(255)"/>
-            <column name="CONTACT_INFORMATION_EMAIL" type="VARCHAR(255)"/>
-            <column name="CONTACT_INFORMATION_PHONE" type="VARCHAR(255)"/>
-            <column name="CONTACT_INFORMATION_URL" type="VARCHAR(255)"/>
+        <addColumn tableName="PROJECT">
+            <column name="OWNER_ID" type="UUID"/>
         </addColumn>
-    </changeSet>
-    <changeSet id="2" author="project-management-data">
-        <dropColumn columnName="EMAIL" tableName="USER_"/>
     </changeSet>
 </databaseChangeLog>

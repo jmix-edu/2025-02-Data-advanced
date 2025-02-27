@@ -8,6 +8,7 @@
             <fetchPlan extends="_base">
                 <property name="manager" fetchPlan="_instance_name"/>
                 <property name="roadmap" fetchPlan="_base"/>
+                <property name="owner" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="projectDl"/>
             <collection id="participantsDc" property="participants"/>
@@ -38,6 +39,12 @@
             </entityPicker>
             <select id="statusField" property="status"/>
             <textField id="projectLabelsField" property="projectLabels" readOnly="true"/>
+            <entityPicker id="ownerField" property="owner">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
         </formLayout>
         <details id="roadmapDetails" summaryText="msg://roadmapDetails.summaryText" width="100%">
             <formLayout id="roadmapForm" dataContainer="projectDc">

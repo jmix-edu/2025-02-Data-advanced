@@ -1,4 +1,4 @@
-package com.company.projectmanagementdata.listeners;
+package com.company.projectmanagementdata.listener;
 
 import com.company.projectmanagementdata.entity.Task;
 import jakarta.persistence.*;

@@ -4,6 +4,9 @@ import com.company.projectmanagementdata.entity.Project;
 import com.company.projectmanagementdata.entity.ProjectStats;
 import com.company.projectmanagementdata.entity.Task;
 import io.jmix.core.DataManager;
+import io.jmix.core.FetchPlan;
+import io.jmix.core.FetchPlanRepository;
+import io.jmix.core.FetchPlans;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,13 +17,22 @@ public class ProjectStatsService {
 
 
     private final DataManager dataManager;
+    private final FetchPlans fetchPlans;
+    private final FetchPlanRepository fetchPlanRepository;
 
-    public ProjectStatsService(DataManager dataManager) {
+    public ProjectStatsService(DataManager dataManager, FetchPlans fetchPlans, FetchPlanRepository fetchPlanRepository) {
         this.dataManager = dataManager;
+        this.fetchPlans = fetchPlans;
+        this.fetchPlanRepository = fetchPlanRepository;
     }
 
     public List<ProjectStats> fetchProjectStatistics() {
-        List<Project> projects = dataManager.load(Project.class).all().list();
+        List<Project> projects = dataManager.load(Project.class)
+                .all()
+//                .fetchPlan(createFetchPlanWithTasks())
+//                .fetchPlan(fetchPlanRepository.getFetchPlan(Project.class, "project-with-tasks"))
+                .fetchPlan("project-with-tasks")
+                .list();
         List<ProjectStats> projectStats = projects.stream()
                 .map(project -> {
                     ProjectStats stats = dataManager.create(ProjectStats.class);
@@ -45,5 +57,14 @@ public class ProjectStatsService {
                 " where te.task.project.id = :projectId", Integer.class)
                 .parameter("projectId", id)
                 .one();
+    }
+
+    private FetchPlan createFetchPlanWithTasks() {
+        return fetchPlans.builder(Project.class)
+                .addFetchPlan(FetchPlan.INSTANCE_NAME)
+                .add("tasks", fetchPlanBuilder ->
+                        fetchPlanBuilder.add("estimatedEfforts")
+                                .add("startDate"))
+                .build();
     }
 }
